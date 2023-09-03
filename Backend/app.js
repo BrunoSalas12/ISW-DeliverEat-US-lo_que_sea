@@ -1,5 +1,7 @@
 import express from 'express';
-import CONSTANTES from './src/constantes';
+import CONSTANTES from './src/constantes.js';
+import ciudadesServicio from './src/servicios/ciudades.servicio.js';
+
 
 const app = express();
 

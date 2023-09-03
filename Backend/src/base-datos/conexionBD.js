@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
-import CONSTANTES from "../constantes";
-import modeloCiudades from "../modelos/modelo-ciudades";
+import CONSTANTES from "../constantes.js";
+import modeloCiudades from "../modelos/modelo-ciudades.js";
 
 const conexionBD = new Sequelize({
     dialect: "sqlite",
-    storage: "../BD/base-DeliveriEat.db"
+    storage: "./BD/base-DeliverEat.db"
 })
 
 const Ciudaes = conexionBD.define(

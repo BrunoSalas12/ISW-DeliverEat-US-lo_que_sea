@@ -1,4 +1,4 @@
-import conexionBD from "../base-datos/conexionBD";
+import conexionBD from "../base-datos/conexionBD.js";
 
 const obtenerCiudades = async () => {
     const resultado = await conexionBD.models.Ciudades.findAll({
@@ -6,10 +6,15 @@ const obtenerCiudades = async () => {
         order:[['Nombre', 'ASC']]
     })
 
-    return resultado.map(c =>{
+    const vecCid = resultado.map(c =>{
         return{
-            id: c.dataValues.Id,
+            id_c: c.dataValues.Id,
             nombre: c.dataValues.Nombre
         }
     })
-}
+    return {"ciudades": vecCid}
+};
+
+const ciudadesServicio = {obtenerCiudades};
+
+export default ciudadesServicio;
