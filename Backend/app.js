@@ -16,6 +16,10 @@ app.get('/api/ciudades', async (req,res)=>{
         }
     })
 
+app.post('/api/pedidos_lo_que_sea', async (req, res) =>{
+
+})
+
 
 app.listen(CONSTANTES.PUERTO, () => {
     console.log(`Aplicacion levantada en el puerto ${CONSTANTES.PUERTO}`)
