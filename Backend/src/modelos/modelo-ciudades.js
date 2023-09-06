@@ -10,6 +10,12 @@ const atributosCiudaes = {
         type: DataTypes.TEXT,
         allowNull: false,
         unique: true
+    },
+    Dir_Comercio:{
+        type: DataTypes.TEXT
+    },
+    Dir_Entrega:{
+        type: DataTypes.TEXT
     }
 };
 
