@@ -1,0 +1,45 @@
+.textos{
+    background-color: #EAEBED;
+    color: #006989;
+}
+
+.grilla1{
+    display: flex;
+    justify-content: center;
+    color: black;
+}
+
+.div1{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+.grilla2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.botonfotos {
+    background-color: #007090;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.botonfotos:hover {
+    background-color: #006989;
+    color: #EAEBED;
+  }
+
+.googleMaps{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Para el tamaño del celu*/
+@media (max-width: 800px) {
+
+}
