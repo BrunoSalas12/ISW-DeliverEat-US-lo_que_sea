@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #A3BAC3;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  nav {
+    background-color: #007090;
+    color: #EAEBED;
+  }
+  
+  footer {
+    background-color: #007090;
+    color: #EAEBED;
+  }
+  
