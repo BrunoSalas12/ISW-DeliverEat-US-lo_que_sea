@@ -80,6 +80,7 @@
     margin-bottom: 20px;
     margin-left: 20px;
 }
+
 /*Para el tamaño del celu*/
 @media (max-width: 800px) {
     .datosDePago{
@@ -102,6 +103,21 @@
     .labelfechas{
         display: flex;
         flex-direction: column;
+        text-align: center;
+    }
+
+    .botonConfirmar{
+        display: flex;
+        justify-content: center;
+    }
+
+    .divPagos{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .datosDeLaTarjeta{
         text-align: center;
     }
 }

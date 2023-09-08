@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import Grid from '@mui/material/Grid';
 import { FiUpload } from "react-icons/fi";
+import { BsBagCheckFill } from "react-icons/bs";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
+import ReactCards from '../Components/ReactCards';
 import '../Styles/pedidos.css'
 
 const Pedidos = () => {
@@ -19,6 +21,9 @@ const Pedidos = () => {
   const [calleEntrega, setCalleEntrega] = useState("");
   const [numeroEntrega, setNumeroEntrega] = useState("");
   const [referenciaEntrega, setReferenciaEntrega] = useState("");
+
+  const [formaDePago, setFormaDePago] = useState('');
+  const [montoEfectivo, setMontoEfectivo] = useState(0);
 
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
@@ -48,7 +53,7 @@ const Pedidos = () => {
 
             <Grid item xs={12} lg={5} className='grilla1'>
               <div className='div1'>
-                <label className='mt-10 mb-2 font-bold'>Productos a enviar:</label>
+                <label className='mt-7 mb-2 font-bold'>Productos a enviar:</label>
                 <button className="mb-2 rounded-full botonfotos py-2 px-4 flex justify-center flex-col items-center">Subir fotos<FiUpload/></button>              
               </div>
             </Grid>
@@ -122,15 +127,23 @@ const Pedidos = () => {
               <div className='mb-4 botonesPagos'>
                   <label>Forma de pago</label>
                   <div className='direccionbotonesPago'>
-                    <button className='rounded-full flex flex-col botonfotos py-2 px-4'>En efectivo</button>
-                    <button className='rounded-full flex flex-col botonfotos py-2 px-4'>Con tarjeta</button>
+                    <button className={`rounded-full flex flex-col botonfotos py-2 px-4 ${formaDePago === 'efectivo' ? 'seleccionado' : ''}`} onClick={() => setFormaDePago('efectivo')}>En efectivo</button>
+                    <button className={`rounded-full flex flex-col botonfotos py-2 px-4 ${formaDePago === 'tarjeta' ? 'seleccionado' : ''}`} onClick={() => setFormaDePago('tarjeta')}>Con tarjeta</button>
                   </div>
               </div>
             </Grid>
-            <Grid items xs={12} lg={7}>
-              <div className='interfazPago'>
-                <h1>Poner interfaces para el pago</h1>
-              </div>
+            <Grid items xs={12} lg={7} className='divPagos flex justify-start'>
+            <div className='interfazPago'>
+              {formaDePago === 'efectivo' ? (
+                <div className='monto'>
+                  <TextField id="montoEfectivo" label="Monto en efectivo" type="number" variant="outlined" fullWidth InputLabelProps={{ shrink: true }} value={montoEfectivo} onChange={(e) => setMontoEfectivo(e.target.value)}/>
+                </div>
+              ) : formaDePago === 'tarjeta' ? (
+                <div className='datosDeLaTarjeta'>
+                  <ReactCards></ReactCards>
+                </div>
+              ) : null}
+            </div>
             </Grid>
           </Grid>
 
@@ -150,6 +163,10 @@ const Pedidos = () => {
                 <TextField id="hora" label="Hora" type="time" variant="outlined" fullWidth InputLabelProps={{ shrink: true}} value={hora} onChange={(e) => setHora(e.target.value)}/>
               </div>
               )}            
+          </div>
+
+          <div className='botonConfirmar mb-4 flex justify-end lg:mr-10'>
+            <button className="flex flex-row gap-2 align-center rounded-full botonfotos py-2 px-4">Confirmar pedido<BsBagCheckFill/></button>              
           </div>
         </div>
 
