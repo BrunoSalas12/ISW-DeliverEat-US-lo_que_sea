@@ -39,7 +39,69 @@
     align-items: center;
 }
 
+.datosDePago{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.interfazPago{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botonesPagos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.direccionbotonesPago{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.fechaRecepcion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputsFechaHora{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
 /*Para el tamaño del celu*/
 @media (max-width: 800px) {
+    .datosDePago{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
+    .interfazPago{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inputsFechaHora{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .labelfechas{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
 }
