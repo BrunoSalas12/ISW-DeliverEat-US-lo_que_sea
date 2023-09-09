@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import Grid from '@mui/material/Grid';
@@ -9,10 +9,11 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import ReactCards from '../Components/ReactCards';
-import '../Styles/pedidos.css'
+import '../Styles/pedidos.css';
+import { fetchCiudades } from '../api';
 
 const Pedidos = () => {
-  const [ciudad, setCiudadSeleccionada] = useState("Villa Carlos Paz");
+  const [ciudad, setCiudadSeleccionada] = useState({});
 
   const [calleComercio, setCalleComercio] = useState("");
   const [numeroComercio, setNumeroComercio] = useState("");
@@ -29,6 +30,7 @@ const Pedidos = () => {
   const [hora, setHora] = useState("");
   const [seleccionarFecha, setSeleccionarFecha] = useState(false);
   const [loAntesPosible, setLoAntesPosible] = useState(true);
+  const [ciudades, setCiudades] = useState([]);
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -39,8 +41,21 @@ const Pedidos = () => {
 
   const handleLoAntesPosibleChange = () => {
     setLoAntesPosible(!loAntesPosible);
-    setSeleccionarFecha(false); 
+    setSeleccionarFecha(false);
   };
+
+
+  useEffect(() => {
+    fetchCiudades()
+      .then(jsonCiudades => {
+        setCiudades(jsonCiudades['ciudades']);
+      })
+      .catch(e => console.log(e));
+  }, []);
+
+  const handleChangeCiudad = (idx) => {
+    setCiudadSeleccionada({ ...ciudades[idx] })
+  }
 
   return (
     <div>
@@ -66,16 +81,17 @@ const Pedidos = () => {
 
           <h3 className='py-3 pl-4 textos'>Datos de envío</h3>
           <div className='datosDeEnvio'>
-              <div className='selectCiudad ml-10 my-5'>
-                <label className='font-bold'>Ciudad:</label>
-                <Select className='ml-3' labelId="demo-simple-select-label" id="demo-simple-select" value={ciudad} onChange={(e) => setCiudadSeleccionada(e.target.value)}>
-                  <MenuItem value={"Villa Carlos Paz"}>Villa Carlos Paz</MenuItem>
-                  <MenuItem value={"Santa Rosa de Calamuchita"}>Santa Rosa de Calamuchita</MenuItem>
-                  <MenuItem value={"Villa General Belgrano"}>Villa General Belgrano</MenuItem>
-                  <MenuItem value={"Mina Clavero"}>Mina Clavero</MenuItem>
-                  <MenuItem value={"Nono"}>Nono</MenuItem>
-                </Select>
-              </div>
+            <div className='selectCiudad ml-10 my-5'>
+              <label className='font-bold'>Ciudad:</label>
+              {
+                ciudades.length > 0 && <Select className='ml-3' labelId="demo-simple-select-label" id="demo-simple-select" defaultValue={0} onChange={e => handleChangeCiudad(e.target.value)}>
+                {ciudades.map((c, idx) => (
+                  <MenuItem key={idx} value={idx}>{c['nombre']}</MenuItem>
+                )
+                )}
+              </Select>
+              }
+            </div>
           </div>
 
           <h3 className='py-3 pl-4 textos'>Comercio</h3>
