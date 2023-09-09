@@ -9,14 +9,7 @@ import {
   formatExpirationDate,
 } from './CreditCards/utils';
 
-function ReactCards() {
-  const [cardData, setCardData] = useState({
-    number: '',
-    name: '',
-    expiry: '',
-    cvc: '',
-    focused: '',
-  });
+function ReactCards({cardData, setCardData}) {
 
   const handleCallback = ({ issuer }, isValid) => {
     if (isValid) {

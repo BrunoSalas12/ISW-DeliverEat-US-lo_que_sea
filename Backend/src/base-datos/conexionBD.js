@@ -9,22 +9,24 @@ const conexionBD = new Sequelize({
     storage: "./BD/base-DeliverEat.db"
 })
 
-const Ciudaes = conexionBD.define(
+export const Ciudades = conexionBD.define(
     CONSTANTES.MODELOS_BD.MODELO_CIUDADES,
     modeloCiudades.atributosCiudaes,
     modeloCiudades.opcionesCiudades
 )
 
-const Usuarios = conexionBD.define(
+export const Usuarios = conexionBD.define(
     CONSTANTES.MODELOS_BD.MODELO_USUARIOS,
     modeloUsuarios.atributosUsuarios,
     modeloUsuarios.opcionesUsuarios,
 )
 
-const PedidosLoQueSea = conexionBD.define(
+export const PedidosLoQueSea = conexionBD.define(
     CONSTANTES.MODELOS_BD.MODELO_PEDIDO,
     modeloPedidoLoQueSea.atributosPedidoLoQueSea,
     modeloPedidoLoQueSea.opcionesPedidosLoQueSea
 )
 
-export default conexionBD
+conexionBD.sync();
+
+export default conexionBD;

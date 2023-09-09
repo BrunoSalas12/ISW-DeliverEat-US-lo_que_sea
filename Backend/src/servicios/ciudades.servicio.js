@@ -8,7 +8,7 @@ const obtenerCiudades = async () => {
 
     const vecCid = resultado.map(c =>{
         return{
-            id_c: c.dataValues.Id,
+            id: c.dataValues.Id,
             nombre: c.dataValues.Nombre,
             direcciones:{
                 comercio: c.dataValues.Dir_Comercio,

@@ -1,27 +1,25 @@
-import conexionBD from "../base-datos/conexionBD.js"
+import { PedidosLoQueSea } from "../base-datos/conexionBD.js"
 import CONSTANTES from "../constantes.js";
 
 const mapearPedido = (pedidoReq) => {
-    let pedidoLQS = conexionBD.models.PedidoLoQueSea.build();
+    let pedidoLQS = PedidosLoQueSea.build();
     pedidoLQS.Desc_Objetos = pedidoReq.desc_objetos;
-    pedidoLQS.Id_Ciudad = pedidoReq.ciudad;
-    pedidoLQS.Dir_Comercio = pedidoReq.dir_comercio;
-    pedidoLQS.Dir_Entrega = pedidoReq.dir_entrega;
-    if(pedidoReq.pago.forma == CONSTANTES.METODOS_FORMA_PAGO.METODO_EFECTIVO){
-        pedidoLQS.Forma_Pago = pedidoReq.pago.forma;
-        pedidoLQS.Monto_Efectivo = pedidoReq.pago.monto_efectivo;
+    pedidoLQS.Id_Ciudad = pedidoReq.ciudad.id;
+    pedidoLQS.Dir_Comercio = pedidoReq.calle_comercio + ' ' + pedidoReq.nro_comercio + ' - referencia: ' + pedidoReq.ref_comercio;
+    pedidoLQS.Dir_Entrega = pedidoReq.calle_entrega + ' ' + pedidoReq.nro_entrega + ' - referencia: ' + pedidoReq.ref_entrega;
+    pedidoLQS.Forma_Pago = pedidoReq.forma_pago;
+    if (pedidoReq.forma_pago == CONSTANTES.METODOS_FORMA_PAGO.METODO_EFECTIVO) {
+        pedidoLQS.Monto_Efectivo = pedidoReq.monto_efectivo;
     }
-    else if(pedidoReq.pago.forma == CONSTANTES.METODOS_FORMA_PAGO.METODO_TARJETA_CREDITO){
-        pedidoLQS.Forma_Pago = pedidoReq.pago.forma;
-        pedidoLQS.Numero_TC = pedidoReq.pago.nro_TC;
-        pedidoLQS.Nombre_Titular_TC = pedidoReq.pago.nombre_titular_TC;
-        pedidoLQS.Apellido_Titular_TC = pedidoReq.pago.apellido_titular_TC;
-        pedidoLQS.Fecha_Vencimiento_TC = pedidoReq.pago.fecha_ven_TC;
-        pedidoLQS.CVC_TC = pedidoReq.pago.CVC_TC;
+    else if (pedidoReq.forma_pago == CONSTANTES.METODOS_FORMA_PAGO.METODO_TARJETA_CREDITO) {
+        pedidoLQS.Numero_TC = pedidoReq.datos_tarjeta.number;
+        pedidoLQS.Nombre_Titular_TC = pedidoReq.datos_tarjeta.name;
+        pedidoLQS.Fecha_Vencimiento_TC = pedidoReq.datos_tarjeta.expiry;
+        pedidoLQS.CVC_TC = pedidoReq.datos_tarjeta.cvc;
     }
-    pedidoLQS.Fecha_Entrega = pedidoReq.fecha_entrega;
-    pedidoLQS.Monto_Total = pedidoReq.monto_total;
-    pedidoLQS.Id_Usuario = pedidoReq.usuario.id;
+    pedidoLQS.Fecha_Entrega = pedidoReq.fecha_entrega + ' ' + (pedidoReq.hora_entrega === undefined ? '' : pedidoReq.hora_entrega);
+    pedidoLQS.Monto_Total = pedidoReq.monto_efectivo;
+    pedidoLQS.Id_Usuario = 1;
     return pedidoLQS;
 };
 
@@ -30,6 +28,6 @@ const insertarPedidoLoQueSea = async (pedidoAGuardar) => {
     await pedidoAGuardar.save();
 };
 
-const pedidosLoQueSeaServicio = {insertarPedidoLoQueSea, mapearPedido};
+const pedidosLoQueSeaServicio = { insertarPedidoLoQueSea, mapearPedido };
 
 export default pedidosLoQueSeaServicio;
