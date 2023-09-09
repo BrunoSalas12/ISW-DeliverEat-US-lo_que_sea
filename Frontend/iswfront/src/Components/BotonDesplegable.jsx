@@ -21,12 +21,12 @@ const callsToAction = [
 
 
 export default function Desplegable() {
-    
+
     const navigate = useNavigate();
 
     return (
     <Popover className="relative">
-      <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+      <Popover.Button className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-300">
         <span>Pedidos</span>
         {/*<ChevronDownIcon className="h-5 w-5" aria-hidden="true" />*/}
       </Popover.Button>

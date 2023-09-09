@@ -25,6 +25,8 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
+              <button className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-300" >Promociones</button>
+              <button className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-300" >Comercios</button>
               <Desplegable/>
               <button className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-300" onClick={() => navigate(`/`)}>Inicio</button>
             </div>
