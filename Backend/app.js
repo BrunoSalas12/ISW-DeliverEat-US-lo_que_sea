@@ -1,6 +1,7 @@
 import express from 'express';
 import CONSTANTES from './src/constantes.js';
 import ciudadesServicio from './src/servicios/ciudades.servicio.js';
+import pedidosLoQueSeaServicio from './src/servicios/pedido_lo_que_sea.servicio.js';
 
 
 const app = express();
@@ -17,6 +18,13 @@ app.get('/api/ciudades', async (req,res)=>{
     })
 
 app.post('/api/pedidos_lo_que_sea', async (req, res) =>{
+    try{
+        const pedidoAGuardar = await pedidosLoQueSeaServicio.mapearPedido(req.body)
+        await pedidosLoQueSeaServicio.insertarPedidoLoQueSea(pedidoAGuardar)
+        return res.status(200)
+    }catch(err){
+        return res.status(500).json({error: err.message})
+    }
 
 })
 
