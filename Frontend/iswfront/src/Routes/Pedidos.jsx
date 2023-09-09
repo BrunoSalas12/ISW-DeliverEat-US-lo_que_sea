@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import Grid from '@mui/material/Grid';
+import Maps from '../Components/Maps';
 import { FiUpload } from "react-icons/fi";
 import { BsBagCheckFill } from "react-icons/bs";
 import Select from '@mui/material/Select';
@@ -109,7 +110,7 @@ const Pedidos = () => {
               </Grid>
 
               <Grid item xs={12} lg={7} className='googleMaps mt-4 text-center'>
-                <h1>Ver como podemos integrar el mapa de Google Maps</h1>
+                <Maps></Maps>
               </Grid>
             </Grid>
           </div>
@@ -129,7 +130,7 @@ const Pedidos = () => {
               </Grid>
 
               <Grid item xs={12} lg={7} className='googleMaps mt-4 text-center'>
-                <h1>Ver como podemos integrar el mapa de Google Maps</h1>
+                <Maps></Maps>
               </Grid>
             </Grid>
           </div>
