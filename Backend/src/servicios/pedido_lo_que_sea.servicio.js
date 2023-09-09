@@ -2,7 +2,22 @@ import conexionBD from "../base-datos/conexionBD.js"
 import CONSTANTES from "../constantes.js";
 
 const mapearPedido = (pedidoReq) => {
-    let pedidoLQS = conexionBD.models.PedidoLoQueSea.build();
+    let pedidoLQS = conexionBD.models.PedidosLoQueSea.build({
+        /*Desc_Objetos: "",
+        Id_Ciudad: 0,
+        Dir_Comercio: "",
+        Dir_Entrega: "",
+        Forma_Pago: "",
+        Monto_Efectivo: null,
+        Numero_TC: null,
+        Nombre_Titular_TC: null,
+        Apellido_Titular_TC: null,
+        Fecha_Vencimiento_TC: null,
+        CVC_TC: null,
+        Fecha_Entrega: 0,
+        Monto_Total: 0,
+        Id_Usuario: 0*/
+    });
     pedidoLQS.Desc_Objetos = pedidoReq.desc_objetos;
     pedidoLQS.Id_Ciudad = pedidoReq.ciudad;
     pedidoLQS.Dir_Comercio = pedidoReq.dir_comercio;
