@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/app.css'
+import Desplegable from './BotonDesplegable';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +25,8 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
+              <Desplegable/>
               <button className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-300" onClick={() => navigate(`/`)}>Inicio</button>
-              <button className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-300" onClick={() => navigate(`/pedidos`)}>Pedidos</button>
             </div>
           </div>
 
