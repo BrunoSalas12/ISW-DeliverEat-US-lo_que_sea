@@ -1,10 +1,45 @@
 import '../Styles/detallepedidos.css';
 
-import { Modal, Box, Typography, Grid, Button, Stack } from "@mui/material"
+import { useEffect, useState } from 'react';
+
+import { Modal, Box, Typography, Grid, Alert, AlertTitle, Stack, CircularProgress, Button } from "@mui/material"
 import { FORMA_PAGO } from "../utils/common"
 import { postPedido } from "../api"
 
+const ButtonProgress = ({ done, loading, setLoading, setDone, handleSend }) => {
+    if (done) {
+        return (<Alert
+            severity="success">
+            <AlertTitle>Pedido Enviado</AlertTitle>
+            El pedido fue enviado con éxito!
+        </Alert>)
+    } else if (loading) {
+        return (<button
+            className='botonConfirmarDetallePedido align-center rounded-full py-2 px-4' >
+            <CircularProgress />
+        </button>)
+    } else {
+        return (<button
+            className='botonConfirmarDetallePedido align-center rounded-full py-2 px-4'
+            onClick={() => {
+                handleSend();
+                setLoading(true);
+                setTimeout(() => { setDone(true); setLoading(false) }, 1000)
+            }}>
+            Confirmar
+        </button>)
+    }
+}
+
 export default function DetallePedido({ confirmationModal, setConfirmationModal, form }) {
+
+    const [done, setDone] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setDone(false);
+        setLoading(false);
+    }, []);
 
     const handleSend = () => {
         postPedido(form);
@@ -51,7 +86,7 @@ export default function DetallePedido({ confirmationModal, setConfirmationModal,
                         {form.fecha_entrega === 1 ? "Lo antes posible" : form.fecha_entrega + ' ' + form.hora_entrega}
                     </Typography>
                     <Grid className='containerBotonDetalleConfirmar'>
-                        <button className='botonConfirmarDetallePedido align-center rounded-full py-2 px-4' onClick={handleSend}>Confirmar</button>
+                        <ButtonProgress done={done} loading={loading} setLoading={setLoading} setDone={setDone} handleSend={handleSend} />
                     </Grid>
                 </Stack>
             </Box>
