@@ -23,12 +23,20 @@
     color: black;
 }
 
-.botonfotos {
+.botonComun {
     background-color: #007090;
     transition: background-color 0.3s ease-in-out;
 }
 
-.botonfotos:hover {
+.botonfotos {
+    background-color: #007090;
+    transition: background-color 0.3s ease-in-out;
+    align-self: center;
+    justify-self: center;
+    width: 90vw;
+}
+
+.botonfotos:hover, .botonComun:hover {
     background-color: #006989;
     color: #EAEBED;
   }
@@ -80,6 +88,18 @@
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 10px;
+}
+
+.imageCard {
+    border-radius: 1rem;
+    margin: 5px;
+    border-width: 1px;
+    border-color: black;
+    justify-self: center;
+    align-self: center;
+    width: 90vw;
+    max-width: 400px;
+    max-height: 400px;
 }
 
 /*Para el tamaño del celu*/

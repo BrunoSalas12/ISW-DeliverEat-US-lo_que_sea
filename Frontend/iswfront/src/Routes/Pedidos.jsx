@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import Grid from '@mui/material/Grid';
@@ -15,7 +15,8 @@ import { fetchCiudades } from '../api';
 import DetallePedido from '../Components/DetallePedido';
 import { FORMA_PAGO } from '../utils/common';
 import { nonEmpty, isValid } from '../utils/validations';
-import { Box, Stack, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { mbToBytes } from '../utils/conversions';
 
 const TODAY = new Date().toISOString().split('T')[0];
 const validationsEfectivo = {
@@ -89,6 +90,20 @@ const Pedidos = () => {
     cvc: '',
     focused: '',
   });
+
+  const [foto, setFoto] = useState('')
+  const handleSubirFoto = (file) => {
+    if (!file) return;
+    if (file.size > mbToBytes(5)) {
+      alert('La foto debe ser de tamaño menor a 5 MB!')
+      return;
+    }
+    setFoto(URL.createObjectURL(file));
+  }
+  const inputFotoRef = useRef(null)
+  const onClickSubirFoto = () => {
+    inputFotoRef.current.click();
+  }
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -169,7 +184,20 @@ const Pedidos = () => {
 
           <Grid item xs={12} lg={5} className='grilla1'>
             <div className='div1'>
-              <button className="mt-2 mb-2 rounded-full botonfotos py-2 px-4 flex justify-center flex-col items-center">Subir fotos<FiUpload /></button>
+              <button
+                className="mt-2 mb-2 rounded-full botonfotos py-2 px-4 flex justify-center flex-col items-center"
+                onClick={onClickSubirFoto}
+              >
+                Subir foto<FiUpload />
+              </button>
+              <input
+                ref={inputFotoRef}
+                hidden
+                type="file"
+                accept="image/jpg, image/jpeg"
+                onChange={(e) => handleSubirFoto(e.target.files[0])}
+              />
+              {foto && <img src={foto} className='imageCard' alt="foto-producto" />}
             </div>
           </Grid>
 
@@ -295,8 +323,8 @@ const Pedidos = () => {
             <div className='mb-4 botonesPagos'>
               <label>Forma de pago</label>
               <div className='direccionbotonesPago'>
-                <button name="forma_pago" className={`rounded-full flex flex-col botonfotos mr-2 py-2 px-4 ${form.forma_pago === FORMA_PAGO.EFECTIVO ? 'seleccionado' : ''}`} value={FORMA_PAGO.EFECTIVO} onClick={handleChange}>En efectivo</button>
-                <button name="forma_pago" className={`rounded-full flex flex-col botonfotos py-2 px-4 ${form.forma_pago === FORMA_PAGO.TARJETA ? 'seleccionado' : ''}`} value={FORMA_PAGO.TARJETA} onClick={handleChange}>Con tarjeta</button>
+                <button name="forma_pago" className={`rounded-full flex flex-col botonComun mr-2 py-2 px-4 ${form.forma_pago === FORMA_PAGO.EFECTIVO ? 'seleccionado' : ''}`} value={FORMA_PAGO.EFECTIVO} onClick={handleChange}>En efectivo</button>
+                <button name="forma_pago" className={`rounded-full flex flex-col botonComun py-2 px-4 ${form.forma_pago === FORMA_PAGO.TARJETA ? 'seleccionado' : ''}`} value={FORMA_PAGO.TARJETA} onClick={handleChange}>Con tarjeta</button>
               </div>
               {!validState.isValid && !validState.results?.forma_pago && <Typography mt="15px" color='#f44336'>Elija forma de pago</Typography>}
             </div>
@@ -367,7 +395,7 @@ const Pedidos = () => {
         </div>
 
         <div className='botonConfirmar mb-4 flex justify-end lg:mr-10'>
-          <button onClick={handleConfirmation} className="flex flex-row gap-2 align-center rounded-full botonfotos py-2 px-4">Confirmar pedido<BsBagCheckFill /></button>
+          <button onClick={handleConfirmation} className="flex flex-row gap-2 align-center rounded-full botonComun py-2 px-4">Confirmar pedido<BsBagCheckFill /></button>
         </div>
       </div>
 

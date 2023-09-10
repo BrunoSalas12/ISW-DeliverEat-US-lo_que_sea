@@ -6,6 +6,8 @@ import { Modal, Box, Typography, Grid, Alert, AlertTitle, Stack, CircularProgres
 import { FORMA_PAGO } from "../utils/common"
 import { postPedido } from "../api"
 
+const lineStyle = { margin: '10px 0px 15px 0px', width: '65vw', height: '2px', backgroundColor: 'white' }
+
 const ButtonProgress = ({ done, loading, setLoading, setDone, handleSend }) => {
     if (done) {
         return (<Alert
@@ -68,20 +70,20 @@ export default function DetallePedido({ confirmationModal, setConfirmationModal,
                 <Stack>
                     <Typography sx={{ fontFamily: 'Montserrat', textAlign: 'center', textJustify: 'center', overflowX: 'hidden', textOverflow: 'ellipsis' }}>
                         <b>Detalle del pedido</b><br />
-                        <Grid style={{ margin: '10px 0px 15px 0px', height: '2px', backgroundColor: 'white' }}></Grid>
+                        <Grid style={lineStyle}></Grid>
                         <b>Comercio </b><br />
                         {form.ciudad?.nombre} <br />
                         {form.calle_comercio} {form.nro_comercio} <br />
                         {form.ref_comercio} <br />
-                        <Grid style={{ margin: '10px 0px 15px 0px', height: '2px', backgroundColor: 'white' }}></Grid>
+                        <Grid style={lineStyle}></Grid>
                         <b>Entrega </b><br />
                         {form.calle_entrega} {form.nro_entrega} <br />
                         {form.ref_entrega} <br />
-                        <Grid style={{ margin: '10px 0px 15px 0px', height: '2px', backgroundColor: 'white' }}></Grid>
+                        <Grid style={lineStyle}></Grid>
                         <b>Forma de Pago </b><br />
                         {form.forma_pago} <br />
                         {form.forma_pago === FORMA_PAGO.EFECTIVO && '$ ' + form.monto_efectivo}
-                        <Grid style={{ margin: '10px 0px 15px 0px', height: '2px', backgroundColor: 'white' }}></Grid>
+                        <Grid style={lineStyle}></Grid>
                         <b>Fecha de Entrega </b><br />
                         {form.fecha_entrega === 1 ? "Lo antes posible" : form.fecha_entrega + ' ' + form.hora_entrega}
                     </Typography>
