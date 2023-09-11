@@ -3,10 +3,26 @@
     color: #006989;
 }
 
+.seccion1{
+    background-color: #006989;
+    color: #EAEBED;
+    
+}
+.seccion2{
+    
+    color: #006989;
+    background-color: #EAEBED;
+}
+.datos{
+    background-color: #a3bac3;
+    color: black;
+}
+
 .grilla1{
     display: flex;
     justify-content: center;
-    color: black;
+    color: #006989;
+    background-color: #EAEBED;
 }
 
 .div1{
@@ -21,17 +37,19 @@
     justify-content: center;
     align-items: center;
     color: black;
+    background-color: #EAEBED;
 }
 
 .botonfotos {
-    background-color: #007090;
+    background-color: #a3bac3;
     transition: background-color 0.3s ease-in-out;
 }
 
 .botonfotos:hover {
-    background-color: #006989;
+    background-color: #01a7c2;
     color: #EAEBED;
   }
+
 
 .googleMaps{
     display: flex;
@@ -80,6 +98,18 @@
     margin-bottom: 20px;
     margin-left: 20px;
 }
+.lineaHorizontalBase{
+    background-color: #006989;
+    height: 2px;
+    
+}
+.lineaHorizontalPunteada{
+    background-color: #006989;
+    height: 2px;
+    border-width: 1px;
+    border-style: dotted;
+}
+
 
 /*Para el tamaño del celu*/
 @media (max-width: 800px) {
@@ -120,4 +150,5 @@
     .datosDeLaTarjeta{
         text-align: center;
     }
+    
 }

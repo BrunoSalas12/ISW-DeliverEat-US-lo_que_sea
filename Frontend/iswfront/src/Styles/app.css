@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 body {
-    background-color: #A3BAC3;
+    background-color: #eaebed;
     font-family: 'Montserrat', sans-serif;
   }
 
   nav {
-    background-color: #007090;
+    background-color: #006989;
     color: #EAEBED;
   }
   
   footer {
-    background-color: #007090;
+    background-color: #006989;
     color: #EAEBED;
   }
   

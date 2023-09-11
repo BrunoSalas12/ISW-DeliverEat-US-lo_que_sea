@@ -61,8 +61,7 @@ const Pedidos = () => {
   return (
     <div>
       <Navbar/>
-
-        <h3 className='py-3 pl-4 textos'>Nuevo pedido</h3>
+        <h3 className='py-3 pl-4 seccion1'>Nuevo pedido </h3>
         <div className='detallePedido'>
 
           <Grid container direction={{ xs: "column-reverse", lg: "row"}}>
@@ -79,13 +78,13 @@ const Pedidos = () => {
             </Grid>
             
           </Grid>
-
-          <h3 className='py-3 pl-4 textos'>Datos de envío</h3>
-          <div className='datosDeEnvio'>
-            <div className='selectCiudad ml-10 my-5'>
-              <label className='font-bold'>Ciudad:</label>
+<hr className='lineaHorizontalBase'/>
+          <h3 className='py-3 pl-4 seccion2 font-bold'>Datos de envío</h3>
+          <div className='datosDeEnvio seccion2'>
+            <div className='selectCiudad ml-10 seccion2'>
+              <label className='font-bold '>Ciudad:</label>
               {
-                ciudades.length > 0 && <Select className='ml-3' labelId="demo-simple-select-label" id="demo-simple-select" defaultValue={0} onChange={e => handleChangeCiudad(e.target.value)}>
+                ciudades.length > 0 && <Select className='ml-3 datos' labelId="demo-simple-select-label" id="demo-simple-select" defaultValue={0} onChange={e => handleChangeCiudad(e.target.value)}>
                 {ciudades.map((c, idx) => (
                   <MenuItem key={idx} value={idx}>{c['nombre']}</MenuItem>
                 )
@@ -94,9 +93,9 @@ const Pedidos = () => {
               }
             </div>
           </div>
-
-          <h3 className='py-3 pl-4 textos'>Comercio</h3>
-          <div className='detallesDeComercio'>
+          <hr className='lineaHorizontalPunteada'/>
+          <h3 className='py-3 pl-4 seccion2 font-bold'>Comercio</h3>
+          <div className='detallesDeComercio seccion2'>
             <Grid container>
               <Grid item xs={12} lg={5}>
                 <div className='flex flex-col mx-10 mt-2 mb-4 gap-1'>
@@ -114,9 +113,9 @@ const Pedidos = () => {
               </Grid>
             </Grid>
           </div>
-
-          <h3 className='py-3 pl-4 textos'>Destino de entrega</h3>
-          <div className='detallesDeEntrega'>
+          <hr className='lineaHorizontalPunteada'/>
+          <h3 className='py-3 pl-4 seccion2 font-bold'>Destino de entrega</h3>
+          <div className='detallesDeEntrega seccion2'>
             <Grid container>
               <Grid item xs={12} lg={5}>
                 <div className='flex flex-col mx-10 mt-2 mb-4 gap-1'>
@@ -134,12 +133,12 @@ const Pedidos = () => {
               </Grid>
             </Grid>
           </div>
-
-          <h3 className='py-3 pl-4 textos'>Datos de pago</h3>
+          <hr className='lineaHorizontalBase'/>
+          <h3 className='py-3 pl-4 seccion2 font-bold'>Datos de pago</h3>
           <Grid container>
             <Grid items xs={12} lg={5}>
-              <div className='mx-10 mt-2 datosDePago'>
-                <label className='font-bold'>Total a pagar: $...</label>
+              <div className='mx-10 mt-2 datosDePago '>
+                <label className='textos font-bold'>Total a pagar: $...</label>
               </div>
               <div className='mb-4 botonesPagos'>
                   <label>Forma de pago</label>
@@ -163,8 +162,8 @@ const Pedidos = () => {
             </div>
             </Grid>
           </Grid>
-
-          <h3 className='py-3 pl-4 textos'>Fecha de recepción</h3>
+          <hr className='lineaHorizontalBase'/>
+          <h3 className='py-3 pl-4 seccion2 font-bold'>Fecha de recepción</h3>
           <div className="fechaRecepcion my-2">
             <div className='labelfechas'>
 
