@@ -17,3 +17,10 @@ export const nonEmpty = () => {
         return valid;
     }
 }
+
+export const greaterOrEqualThan = (number) => {
+    return (object, property) => {
+        const valid = !!(Number(object[property]) >= number);
+        return valid;
+    }
+}

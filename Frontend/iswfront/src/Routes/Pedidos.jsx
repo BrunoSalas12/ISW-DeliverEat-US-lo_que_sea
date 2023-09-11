@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import Grid from '@mui/material/Grid';
-import Maps from '../Components/Maps';
 import { FiUpload } from "react-icons/fi";
 import { BsBagCheckFill } from "react-icons/bs";
 import Select from '@mui/material/Select';
@@ -14,10 +13,9 @@ import '../Styles/pedidos.css';
 import { fetchCiudades } from '../api';
 import DetallePedido from '../Components/DetallePedido';
 import { FORMA_PAGO, currentYear } from '../utils/common';
-import { nonEmpty, isValid } from '../utils/validations';
+import { nonEmpty, isValid, greaterOrEqualThan } from '../utils/validations';
 import { Typography } from '@mui/material';
 import { mbToBytes } from '../utils/conversions';
-import { Combobox } from '@headlessui/react';
 
 
 const TODAY = new Date().toISOString().split('T')[0];
@@ -29,7 +27,7 @@ const validationsEfectivo = {
   calle_entrega: nonEmpty(),
   nro_entrega: nonEmpty(),
   forma_pago: nonEmpty(),
-  monto_efectivo: nonEmpty(),
+  monto_efectivo: greaterOrEqualThan(5000),
   fecha_entrega: nonEmpty(),
   hora_entrega: nonEmpty(),
 }
@@ -99,7 +97,7 @@ const Pedidos = () => {
     nro_entrega: '',
     ref_entrega: '',
     forma_pago: '',
-    monto_efectivo: '',
+    monto_efectivo: '5000',
     fecha_entrega: loAntesPosible,
     hora_entrega: '-',
     datos_tarjeta: {}
@@ -142,8 +140,8 @@ const Pedidos = () => {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
-    // Chequea que sea un numero, TODO: igual el monto efectivo habria que calcularlo automaticamente creo
-    if (name === 'monto_efectivo' && !/^\d*$/.test(value)) return;
+    console.log(value);
+    if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
     setForm({ ...form, [name]: value })
   }
 
@@ -284,7 +282,7 @@ const Pedidos = () => {
             </Grid>
 
             <Grid item xs={12} lg={7} className='googleMaps mt-2 text-center'>
-              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
+              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600} />
             </Grid>
           </Grid>
         </div>
@@ -332,7 +330,7 @@ const Pedidos = () => {
             </Grid>
 
             <Grid item xs={12} lg={7} className='googleMaps mt-4 text-center'>
-            <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
+              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600} />
             </Grid>
           </Grid>
         </div>
@@ -342,7 +340,7 @@ const Pedidos = () => {
           <Grid items xs={12} lg={5}>
             <div className='datosDePago'>
               <div className='mx-10 mt-2'>
-                <label className='font-bold'>Total a pagar: $...</label>
+                {form.calle_entrega && form.calle_comercio && <label className='font-bold'>Total a pagar: $ 5000</label>}
               </div>
               <div className='botonesPagos mb-2'>
                 <label>Forma de pago</label>
@@ -366,12 +364,14 @@ const Pedidos = () => {
                     variant="outlined"
                     fullWidth
                     InputLabelProps={{ shrink: true }}
+                    error={!validState.results?.monto_efectivo}
+                    helperText={!validState.results?.monto_efectivo && "El monto ingresado no es válido"}
                     value={form.monto_efectivo}
-                    onChange={handleChange} />
+                    onChange={handleChange}
+                  />
                 </div>
               ) : form.forma_pago === FORMA_PAGO.TARJETA ? (
                 <div className='datosDeLaTarjeta'>
-                  {form.monto_efectivo = '0'}
                   <ReactCards validState={validStateTarjeta} formData={cardData} setFormData={setCardData} form={form} setForm={setForm}></ReactCards>
                 </div>
               ) : null}
