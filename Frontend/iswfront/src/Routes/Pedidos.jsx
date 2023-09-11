@@ -81,8 +81,9 @@ const Pedidos = () => {
     fecha_entrega: loAntesPosible,
     hora_entrega: '-',
     datos_tarjeta: {}
-  });
+  }); 
 
+  //VER BIEN ACA CON RESPECTO A ReactCards
   const [cardData, setCardData] = useState({
     number: '',
     name: '',
@@ -161,8 +162,8 @@ const Pedidos = () => {
         <Grid container direction={{ xs: "column-reverse", lg: "row" }}>
 
           <Grid item xs={12} lg={5}>
-            <div className='div1 mt-3 p-2'>
-              <label className='font-bold lg:mr-2 pb-2'>Productos:</label>
+            <div className='div1 mt-3 p-2 lg:ml-10'>
+              <label className='font-bold pb-2'>Productos:</label>
               <TextField
                 id="filled-basic"
                 name="desc_objetos"
@@ -183,7 +184,7 @@ const Pedidos = () => {
         <Grid container direction={{ xs: "column-reverse", lg: "row" }}>
 
           <Grid item xs={12} lg={5} className='grilla1'>
-            <div className='div1'>
+            <div className='div1 lg:ml-10'>
               <button
                 className="mt-2 mb-2 rounded-full botonfotos py-2 px-4 flex justify-center flex-col items-center"
                 onClick={onClickSubirFoto}
@@ -317,16 +318,18 @@ const Pedidos = () => {
         <h3 className='py-3 pl-4 textos'>Datos de pago</h3>
         <Grid container>
           <Grid items xs={12} lg={5}>
-            <div className='mx-10 mt-2 datosDePago'>
-              <label className='font-bold'>Total a pagar: $...</label>
-            </div>
-            <div className='mb-4 botonesPagos'>
-              <label>Forma de pago</label>
-              <div className='direccionbotonesPago'>
-                <button name="forma_pago" className={`rounded-full flex flex-col botonComun mr-2 py-2 px-4 ${form.forma_pago === FORMA_PAGO.EFECTIVO ? 'seleccionado' : ''}`} value={FORMA_PAGO.EFECTIVO} onClick={handleChange}>En efectivo</button>
-                <button name="forma_pago" className={`rounded-full flex flex-col botonComun py-2 px-4 ${form.forma_pago === FORMA_PAGO.TARJETA ? 'seleccionado' : ''}`} value={FORMA_PAGO.TARJETA} onClick={handleChange}>Con tarjeta</button>
+            <div className='datosDePago'>
+              <div className='mx-10 mt-2'>
+                <label className='font-bold'>Total a pagar: $...</label>
               </div>
-              {!validState.isValid && !validState.results?.forma_pago && <Typography mt="15px" color='#f44336'>Elija forma de pago</Typography>}
+              <div className='botonesPagos mb-2'>
+                <label>Forma de pago</label>
+                <div className='direccionbotonesPago'>
+                  <button name="forma_pago" className={`rounded-full flex flex-col botonComun mr-2 py-2 px-4 ${form.forma_pago === FORMA_PAGO.EFECTIVO ? 'seleccionado' : ''}`} value={FORMA_PAGO.EFECTIVO} onClick={handleChange}>En efectivo</button>
+                  <button name="forma_pago" className={`rounded-full flex flex-col botonComun py-2 px-4 ${form.forma_pago === FORMA_PAGO.TARJETA ? 'seleccionado' : ''}`} value={FORMA_PAGO.TARJETA} onClick={handleChange}>Con tarjeta</button>
+                </div>
+                {!validState.isValid && !validState.results?.forma_pago && <Typography mt="15px" color='#f44336'>Elija forma de pago</Typography>}
+              </div>
             </div>
           </Grid>
           <Grid items xs={12} lg={7} className='divPagos flex justify-start'>

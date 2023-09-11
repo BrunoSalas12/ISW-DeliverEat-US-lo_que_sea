@@ -1,35 +1,51 @@
-.textoTarjetas{
+.divtotal {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.tarjetaYdatos{
-  display: flex;
-  justify-content: center;
   flex-direction: row-reverse;
-  gap: 30px;
+  align-items: center;
+  margin: 20px;
 }
 
-.form-group{
+.inputs {
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  gap: 2px;
 }
 
-.App-payment{
-  margin-bottom: 15px;
+.nombreYapellido,
+.numerotarjetaYmesvenc {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 10px;
+}
+
+.cvc{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.inputs div {
+  margin-bottom: 4px;
 }
 
 @media (max-width: 800px) {
-  .tarjetaYdatos{
+  .divtotal {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    gap: 30px;
+    align-items: center;
+    margin: 20px 0;
   }
+
+  .nombreYapellido,
+  .numerotarjetaYmesvenc,
+  .añovencimientoYcvc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+
 }

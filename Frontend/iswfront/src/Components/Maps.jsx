@@ -3,8 +3,9 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { REACT_APP_GOOGLE_MAPS_KEY } from '../keymaps.js';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px',
+  width: '750px',
+  height: '300px',
+  margin: '20px'
 };
 
 const center = {

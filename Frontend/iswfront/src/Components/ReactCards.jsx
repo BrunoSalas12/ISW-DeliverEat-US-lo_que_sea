@@ -1,123 +1,140 @@
 import React, { useState } from 'react';
-import Card from 'react-credit-cards';
+import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import './CreditCards/styleCard.css';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate,
-} from './CreditCards/utils';
+function ReactCards() {
+  const currentYear = new Date().getFullYear();
 
-function ReactCards({cardData, setCardData}) {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    numero: '',
+    mesVencimiento: '01',
+    anoVencimiento: currentYear.toString(),
+    cvc: '',
+  });
 
-  const handleCallback = ({ issuer }, isValid) => {
-    if (isValid) {
-      setCardData((prevState) => ({ ...prevState, issuer }));
-    }
-  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    let newValue = value;
 
-  const handleInputFocus = ({ target }) => {
-    setCardData((prevState) => ({ ...prevState, focused: target.name }));
-  };
-
-  const handleInputChange = ({ target }) => {
-    let { name, value } = target;
-
-    if (name === 'number') {
-      value = formatCreditCardNumber(value);
-    } else if (name === 'expiry') {
-      value = formatExpirationDate(value);
+    if (name === 'numero') {
+      if (newValue.length > 16) {
+        return;
+      }
+      if (newValue.length === 1 && newValue !== '4') {
+        return;
+      }
     } else if (name === 'cvc') {
-      value = formatCVC(value);
+      newValue = newValue.replace(/\D/g, '');
+      if (newValue.length > 3) {
+        return;
+      }
     }
 
-    setCardData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = (e) => { e.preventDefault();
-    alert('You have finished payment!');
-    setCardData({
-      number: '',
-      name: '',
-      expiry: '',
-      cvc: '',
-      focused: '',
+    setFormData({
+      ...formData,
+      [name]: newValue,
     });
   };
 
+  const generateYearOptions = () => {
+    const years = [];
+    for (let i = currentYear; i <= currentYear + 20; i++) {
+      years.push(i.toString());
+    }
+    return years;
+  };
+
   return (
-    <div key='Payment'>
-      <div className='App-payment'>
-        <div className='textoTarjetas'>
-          <h1 className='font-bold'>Ingrese los detalles para el pago</h1>
-          <h4 className='font-bold'>Por favor ingrese su información debajo</h4>
+    <div className='divtotal'>
+      <div className="card-container lg:ml-10">
+      <Cards
+        number={formData.numero}
+        name={`${formData.nombre} ${formData.apellido}`}
+        expiry={`${formData.mesVencimiento}/${formData.anoVencimiento.slice(-2)}`}
+        cvc={formData.cvc}
+      />
+      </div>
+
+      <div className='inputs mr-4'>
+        <div className='nombreYapellido'>
+          <TextField
+            label="Nombre"
+            variant="outlined"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleInputChange}
+          />
+
+          <TextField
+            label="Apellido"
+            variant="outlined"
+            id="apellido"
+            name="apellido"
+            value={formData.apellido}
+            onChange={handleInputChange}
+          />
         </div>
+        <div className='numerotarjetaYmesvenc'>
+          <TextField
+            label="Número de tarjeta"
+            variant="outlined"
+            id="numero"
+            name="numero"
+            value={formData.numero}
+            onChange={handleInputChange}
+          />
+          <div className='divalargue'>
+          <TextField
+            label="Mes de vencimiento"
+            variant="outlined"
+            id="mesVencimiento"
+            name="mesVencimiento"
+            select
+            value={formData.mesVencimiento}
+            onChange={handleInputChange}
+            style={{ width: '100px', marginRight: '10px'}}
 
-        <div className='tarjetaYdatos'>
-          <Card number={cardData.number} name={cardData.name} expiry={cardData.expiry} cvc={cardData.cvc} focused={cardData.focused} callback={handleCallback}/>
+          >
+            {Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')).map((month) => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label="Año de vencimiento"
+            variant="outlined"
+            id="anoVencimiento"
+            name="anoVencimiento"
+            select
+            value={formData.anoVencimiento}
+            onChange={handleInputChange}
+            style={{ width: '100px' }}
 
-          <form onSubmit={handleSubmit}>
-            <div className='form-group'>
-              <small>Nombre del titular</small>
-              <input
-                type='text'
-                name='name'
-                className='form-control'
-                placeholder='Nombre'
-                pattern='[a-zA-Z-]+'
-                required
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                value={cardData.name}
-              />
-            </div>
-            <div className='form-group'>
-              <small>Numero de tarjeta:</small>
-              <input
-                type='tel'
-                name='number'
-                className='form-control'
-                placeholder='Numero de tarjeta'
-                pattern='[\d| ]{16,22}'
-                maxLength='19'
-                required
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                value={cardData.number}
-              />
-            </div>
-            <div className='form-group'>
-              <small>Fecha de expiracion:</small>
-              <input
-                type='tel'
-                name='expiry'
-                className='form-control'
-                placeholder='Fecha expiracion'
-                pattern='\d\d/\d\d'
-                required
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                value={cardData.expiry}
-              />
-            </div>
-            <div className='form-group'>
-              <small>CVC:</small>
-              <input
-                type='tel'
-                name='cvc'
-                className='form-control'
-                placeholder='CVC'
-                pattern='\d{3}'
-                required
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                value={cardData.cvc}
-              />
-            </div>
-            <input type='hidden' name='issuer' value={cardData.issuer}/>
-
-          </form>
+          >
+            {generateYearOptions().map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </TextField>
+          </div>
+        </div>
+        <div className='cvc'>
+          <TextField
+            label="CVC (3 dígitos)"
+            variant="outlined"
+            id="cvc"
+            name="cvc"
+            value={formData.cvc}
+            onChange={handleInputChange}
+          />
         </div>
       </div>
     </div>

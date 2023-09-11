@@ -47,12 +47,14 @@
     align-items: center;
 }
 
-.datosDePago{
+.datosDePago {
     display: flex;
     justify-content: center;
     align-items: center;
+    align-self: center;
     flex-direction: column;
-}
+  }
+  
 
 .interfazPago{
     display: flex;

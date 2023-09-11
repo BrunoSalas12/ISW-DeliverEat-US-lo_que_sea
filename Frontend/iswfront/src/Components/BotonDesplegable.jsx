@@ -9,14 +9,14 @@ import { TbTruckReturn } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 
 const solutions = [
-  { name: 'Pedido de lo que sea', description: 'Get a better understanding of your traffic', href: '#', icon: AiFillShopping , ruta:'/pedidos' },
-  { name: 'pedido en comercio Adherido', description: 'Speak directly to your customers', href: '#', icon: AiFillShop },
-  { name: 'Mis pedidos', description: "Your customers' data will be safe and secure", href: '#', icon: AiOutlineShoppingCart },
-  { name: 'Historia de Pedidos', description: 'Connect with third-party tools', href: '#', icon: SiGoogleforms },
+  { name: 'Pedido de lo que sea', description: 'Get a better understanding of your traffic', icon: AiFillShopping , ruta:'/pedidos' },
+  { name: 'Pedido en comercio adherido', description: 'Speak directly to your customers', icon: AiFillShop },
+  { name: 'Mis pedidos', description: "Your customers' data will be safe and secure", icon: AiOutlineShoppingCart },
+  { name: 'Historia de Pedidos', description: 'Connect with third-party tools', icon: SiGoogleforms },
 ]
 const callsToAction = [
-  { name: 'Devoluciones', href: '#', icon: TbTruckReturn },
-  { name: 'Mis Puntos', href: '#', icon: AiFillStar },
+  { name: 'Devoluciones', icon: TbTruckReturn },
+  { name: 'Mis Puntos', icon: AiFillStar },
 ]
 
 
@@ -46,7 +46,7 @@ export default function Desplegable() {
               {solutions.map((item) => (
                 <div key={item.name} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50" onClick={() => navigate(item.ruta)}>
                   <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                    <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                    <item.icon className="h-6 w-6 text-cyan-800 group-hover:text-cyan-900" aria-hidden="true" />
                   </div>
                   <div>
                     <a href={item.href} className="font-semibold text-gray-900">
