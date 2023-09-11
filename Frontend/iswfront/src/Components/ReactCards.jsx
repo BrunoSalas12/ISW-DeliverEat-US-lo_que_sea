@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import './CreditCards/styleCard.css';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { currentYear } from '../utils/common';
+import { currentYear, currentMonth } from '../utils/common';
 
 function ReactCards({ validState, formData, setFormData, form, setForm }) {
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let newValue = value;
@@ -23,6 +25,15 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
       if (newValue.length > 3) {
         return;
       }
+    } else if (name === 'mesVencimiento') {
+      const year = parseInt(formData.anoVencimiento);
+      const month = parseInt(newValue);
+      if (year === currentYear && month < currentMonth) {
+        setErrorMessage('Está intentando ingresar una tarjeta vencida!');
+        return;
+      } else {
+        setErrorMessage('');
+      }
     }
 
     setFormData({
@@ -31,6 +42,13 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
     });
     setForm({ ...form, datos_tarjeta: { ...formData } })
   };
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      mesVencimiento: currentMonth.toString().padStart(2, '0'),
+    });
+  }, []);
 
   const generateYearOptions = () => {
     const years = [];
@@ -81,6 +99,8 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
             variant="outlined"
             id="numero"
             name="numero"
+            error={!validState.results.numero}
+            helperText={!validState.results.numero && "Numero de tarjeta es requerido"}
             value={formData.numero}
             onChange={handleInputChange}
           />
@@ -94,7 +114,6 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
               value={formData.mesVencimiento}
               onChange={handleInputChange}
               style={{ width: '100px', marginRight: '10px' }}
-
             >
               {Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')).map((month) => (
                 <MenuItem key={month} value={month}>
@@ -111,7 +130,6 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
               value={formData.anoVencimiento}
               onChange={handleInputChange}
               style={{ width: '100px' }}
-
             >
               {generateYearOptions().map((year) => (
                 <MenuItem key={year} value={year}>
@@ -127,11 +145,16 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
             variant="outlined"
             id="cvc"
             name="cvc"
+            error={!validState.results.cvc}
+            helperText={!validState.results.cvc && "CVC es requerido"}
             value={formData.cvc}
             onChange={handleInputChange}
           />
         </div>
-      </div>
+        <div className='mensajeError'>
+          {errorMessage && <p style={{color:'red'}} className="error-message">{errorMessage}</p>}
+        </div>  
+      </div>    
     </div>
   );
 }
