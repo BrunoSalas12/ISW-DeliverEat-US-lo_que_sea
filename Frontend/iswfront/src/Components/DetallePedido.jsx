@@ -71,14 +71,21 @@ export default function DetallePedido({ confirmationModal, setConfirmationModal,
                     <Typography sx={{ fontFamily: 'Montserrat', textAlign: 'center', textJustify: 'center', overflowX: 'hidden', textOverflow: 'ellipsis' }}>
                         <b>Detalle del pedido</b><br />
                         <Grid style={lineStyle}></Grid>
+                        <b>Descripcion de pedido</b><br />
+                        {form.desc_objetos} <br />
+                        <Grid style={lineStyle}></Grid>
                         <b>Comercio </b><br />
                         {form.ciudad?.nombre} <br />
                         {form.calle_comercio} {form.nro_comercio} <br />
                         {form.ref_comercio} <br />
                         <Grid style={lineStyle}></Grid>
                         <b>Entrega </b><br />
+                        {form.ciudad?.nombre} <br />
                         {form.calle_entrega} {form.nro_entrega} <br />
                         {form.ref_entrega} <br />
+                        <Grid style={lineStyle}></Grid>
+                        <b>Monto Total </b><br />
+                        {form.monto_total} <br />
                         <Grid style={lineStyle}></Grid>
                         <b>Forma de Pago </b><br />
                         {form.forma_pago} <br />
@@ -86,6 +93,7 @@ export default function DetallePedido({ confirmationModal, setConfirmationModal,
                         <Grid style={lineStyle}></Grid>
                         <b>Fecha de Entrega </b><br />
                         {form.fecha_entrega === 1 ? "Lo antes posible" : form.fecha_entrega + ' ' + form.hora_entrega}
+                        <Grid style={lineStyle}></Grid>
                     </Typography>
                     <Grid className='containerBotonDetalleConfirmar'>
                         <ButtonProgress done={done} loading={loading} setLoading={setLoading} setDone={setDone} handleSend={handleSend} />

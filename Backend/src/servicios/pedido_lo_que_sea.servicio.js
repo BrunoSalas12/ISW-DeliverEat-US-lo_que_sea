@@ -18,7 +18,7 @@ const mapearPedido = (pedidoReq) => {
         pedidoLQS.CVC_TC = pedidoReq.datos_tarjeta.cvc;
     }
     pedidoLQS.Fecha_Entrega = pedidoReq.fecha_entrega + ' ' + (pedidoReq.hora_entrega === undefined ? '' : pedidoReq.hora_entrega);
-    pedidoLQS.Monto_Total = pedidoReq.monto_efectivo;
+    pedidoLQS.Monto_Total = pedidoReq.monto_total;
     pedidoLQS.Id_Usuario = 1;
     return pedidoLQS;
 };

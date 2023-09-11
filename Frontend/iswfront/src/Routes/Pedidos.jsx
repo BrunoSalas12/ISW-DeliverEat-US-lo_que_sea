@@ -20,6 +20,7 @@ import { mbToBytes } from '../utils/conversions';
 import { Combobox } from '@headlessui/react';
 
 
+
 const TODAY = new Date().toISOString().split('T')[0];
 const validationsEfectivo = {
   desc_objetos: nonEmpty(),
@@ -56,8 +57,9 @@ const validationsDatosTarjeta = {
 }
 
 const Pedidos = () => {
+  const [montoTotal, setMontoTotal] = useState(0);
   const [seleccionarFecha, setSeleccionarFecha] = useState(false);
-  const [loAntesPosible, setLoAntesPosible] = useState(false);
+  const [loAntesPosible, setLoAntesPosible] = useState(true);
   const [ciudades, setCiudades] = useState([]);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [validState, setValidState] = useState({
@@ -98,6 +100,7 @@ const Pedidos = () => {
     calle_entrega: '',
     nro_entrega: '',
     ref_entrega: '',
+    monto_total: 0,
     forma_pago: '',
     monto_efectivo: '',
     fecha_entrega: loAntesPosible,
@@ -139,6 +142,12 @@ const Pedidos = () => {
     setLoAntesPosible(!loAntesPosible);
     setSeleccionarFecha(false);
   };
+  
+  const handleCalculoMontoTotal = (event) => {
+    handleChange(event);
+    let monto = 50 + (50 * Math.abs(form.calle_comercio.length - form.calle_entrega.length));
+    setMontoTotal(monto);
+  }
 
   const handleChange = (event) => {
     let { name, value } = event.target;
@@ -148,6 +157,7 @@ const Pedidos = () => {
   }
 
   const handleConfirmation = () => {
+    setForm({...form, monto_total: montoTotal})
     const validationResults = form.forma_pago === FORMA_PAGO.EFECTIVO ? isValid(form, validationsEfectivo) : isValid(form, validationsTarjeta);
     const validationResultsTarjeta = form.forma_pago === FORMA_PAGO.TARJETA ? isValid(cardData, validationsDatosTarjeta) : { isValid: true };
     setValidState((prev) => prev = { ...validationResults });
@@ -250,19 +260,19 @@ const Pedidos = () => {
                 <TextField
                   id="filled-search"
                   name="calle_comercio"
-                  label="Calle"
+                  label=""
                   type="search"
                   variant="filled"
                   InputLabelProps={{ shrink: true }}
                   error={!validState.results?.calle_comercio}
                   helperText={!validState.results?.calle_comercio && "La calle del comercio es requerida"}
                   value={form.calle_comercio}
-                  onChange={handleChange} />
+                  onChange={handleCalculoMontoTotal} />
                 <label className='font-bold lg:mr-2'>Nro:</label>
                 <TextField
                   id="filled-search"
                   name="nro_comercio"
-                  label="Nro"
+                  label=""
                   type="search"
                   variant="filled"
                   InputLabelProps={{ shrink: true }}
@@ -274,7 +284,7 @@ const Pedidos = () => {
                 <TextField
                   id="filled-search"
                   name="ref_comercio"
-                  label="Referencia"
+                  label=""
                   type="search"
                   variant="filled"
                   InputLabelProps={{ shrink: true }}
@@ -298,19 +308,19 @@ const Pedidos = () => {
                 <TextField
                   id="filled-search"
                   name="calle_entrega"
-                  label="Calle"
+                  label=""
                   type="search"
                   variant="filled"
                   InputLabelProps={{ shrink: true }}
                   error={!validState.results?.calle_entrega}
                   helperText={!validState.results?.calle_entrega && "La calle destino es requerida"}
                   value={form.calle_entrega}
-                  onChange={handleChange} />
+                  onChange={handleCalculoMontoTotal} />
                 <label className='font-bold lg:mr-2'>Nro:</label>
                 <TextField
                   id="filled-search"
                   name="nro_entrega"
-                  label="Nro"
+                  label=""
                   type="search"
                   variant="filled"
                   InputLabelProps={{ shrink: true }}
@@ -322,7 +332,7 @@ const Pedidos = () => {
                 <TextField
                   id="filled-search"
                   name="ref_entrega"
-                  label="Referencia"
+                  label=""
                   type="search"
                   variant="filled"
                   value={form.ref_entrega}
@@ -342,7 +352,8 @@ const Pedidos = () => {
           <Grid items xs={12} lg={5}>
             <div className='datosDePago'>
               <div className='mx-10 mt-2'>
-                <label className='font-bold'>Total a pagar: $...</label>
+                <label className='font-bold'>Total a pagar: $</label>
+                <label className='font-bold'>{montoTotal}</label>
               </div>
               <div className='botonesPagos mb-2'>
                 <label>Forma de pago</label>
