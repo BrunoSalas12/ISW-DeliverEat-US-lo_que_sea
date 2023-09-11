@@ -17,6 +17,8 @@ import { FORMA_PAGO, currentYear } from '../utils/common';
 import { nonEmpty, isValid } from '../utils/validations';
 import { Typography } from '@mui/material';
 import { mbToBytes } from '../utils/conversions';
+import { Combobox } from '@headlessui/react';
+
 
 const TODAY = new Date().toISOString().split('T')[0];
 const validationsEfectivo = {
@@ -170,6 +172,8 @@ const Pedidos = () => {
       : setForm({ ...form, ['fecha_entrega']: '', ['hora_entrega']: '' });
   }, [loAntesPosible])
 
+
+
   return (
     <div>
       <Navbar />
@@ -279,8 +283,8 @@ const Pedidos = () => {
               </div>
             </Grid>
 
-            <Grid item xs={12} lg={7} className='googleMaps mt-4 text-center'>
-              <Maps></Maps>
+            <Grid item xs={12} lg={7} className='googleMaps mt-2 text-center'>
+              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
             </Grid>
           </Grid>
         </div>
@@ -328,7 +332,7 @@ const Pedidos = () => {
             </Grid>
 
             <Grid item xs={12} lg={7} className='googleMaps mt-4 text-center'>
-              <Maps></Maps>
+            <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
             </Grid>
           </Grid>
         </div>
