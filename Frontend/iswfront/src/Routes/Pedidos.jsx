@@ -13,7 +13,7 @@ import ReactCards from '../Components/ReactCards';
 import '../Styles/pedidos.css';
 import { fetchCiudades } from '../api';
 import DetallePedido from '../Components/DetallePedido';
-import { FORMA_PAGO } from '../utils/common';
+import { FORMA_PAGO, currentYear } from '../utils/common';
 import { nonEmpty, isValid } from '../utils/validations';
 import { Typography } from '@mui/material';
 import { mbToBytes } from '../utils/conversions';
@@ -44,6 +44,14 @@ const validationsTarjeta = {
   hora_entrega: nonEmpty(),
   datos_tarjeta: nonEmpty(),
 }
+const validationsDatosTarjeta = {
+  nombre: nonEmpty(),
+  apellido: nonEmpty(),
+  numero: nonEmpty(),
+  mesVencimiento: nonEmpty(),
+  anoVencimiento: nonEmpty(),
+  cvc: nonEmpty(),
+}
 
 const Pedidos = () => {
   const [seleccionarFecha, setSeleccionarFecha] = useState(false);
@@ -67,6 +75,18 @@ const Pedidos = () => {
     }
   });
 
+  const [validStateTarjeta, setValidStateTarjeta] = useState({
+    isValid: true,
+    results: {
+      nombre: true,
+      apellido: true,
+      numero: true,
+      mesVencimiento: true,
+      anoVencimiento: true,
+      cvc: true,
+    }
+  });
+
   const [form, setForm] = useState({
     desc_objetos: '',
     ciudad: {},
@@ -81,15 +101,15 @@ const Pedidos = () => {
     fecha_entrega: loAntesPosible,
     hora_entrega: '-',
     datos_tarjeta: {}
-  }); 
+  });
 
-  //VER BIEN ACA CON RESPECTO A ReactCards
   const [cardData, setCardData] = useState({
-    number: '',
-    name: '',
-    expiry: '',
+    nombre: '',
+    apellido: '',
+    numero: '',
+    mesVencimiento: '01',
+    anoVencimiento: currentYear.toString(),
     cvc: '',
-    focused: '',
   });
 
   const [foto, setFoto] = useState('')
@@ -127,8 +147,10 @@ const Pedidos = () => {
 
   const handleConfirmation = () => {
     const validationResults = form.forma_pago === FORMA_PAGO.EFECTIVO ? isValid(form, validationsEfectivo) : isValid(form, validationsTarjeta);
+    const validationResultsTarjeta = form.forma_pago === FORMA_PAGO.TARJETA ? isValid(cardData, validationsDatosTarjeta) : { isValid: true };
     setValidState((prev) => prev = { ...validationResults });
-    if (validationResults.isValid) {
+    setValidStateTarjeta((prev) => prev = { ...validationResultsTarjeta });
+    if (validationResultsTarjeta.isValid && validationResults.isValid) {
       setConfirmationModal(!confirmationModal);
     }
   }
@@ -141,10 +163,6 @@ const Pedidos = () => {
       })
       .catch(e => console.log(e));
   }, []);
-
-  useEffect(() => {
-    setForm({ ...form, datos_tarjeta: (function ({ focused, ...cardData }) { return cardData; })(cardData) })
-  }, [...Object.values(cardData)])
 
   useEffect(() => {
     loAntesPosible
@@ -349,7 +367,8 @@ const Pedidos = () => {
                 </div>
               ) : form.forma_pago === FORMA_PAGO.TARJETA ? (
                 <div className='datosDeLaTarjeta'>
-                  <ReactCards cardData={cardData} setCardData={setCardData}></ReactCards>
+                  {form.monto_efectivo = '0'}
+                  <ReactCards validState={validStateTarjeta} formData={cardData} setFormData={setCardData} form={form} setForm={setForm}></ReactCards>
                 </div>
               ) : null}
             </div>

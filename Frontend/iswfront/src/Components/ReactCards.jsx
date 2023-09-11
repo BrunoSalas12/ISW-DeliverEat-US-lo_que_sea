@@ -4,19 +4,9 @@ import 'react-credit-cards/es/styles-compiled.css';
 import './CreditCards/styleCard.css';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import { currentYear } from '../utils/common';
 
-function ReactCards() {
-  const currentYear = new Date().getFullYear();
-
-  const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    numero: '',
-    mesVencimiento: '01',
-    anoVencimiento: currentYear.toString(),
-    cvc: '',
-  });
-
+function ReactCards({ validState, formData, setFormData, form, setForm }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let newValue = value;
@@ -25,7 +15,7 @@ function ReactCards() {
       if (newValue.length > 16) {
         return;
       }
-      if (newValue.length === 1 && newValue !== '4') {
+      if (newValue.length === 1 && newValue !== '5' && newValue !== '2') {
         return;
       }
     } else if (name === 'cvc') {
@@ -39,6 +29,7 @@ function ReactCards() {
       ...formData,
       [name]: newValue,
     });
+    setForm({ ...form, datos_tarjeta: { ...formData } })
   };
 
   const generateYearOptions = () => {
@@ -52,12 +43,12 @@ function ReactCards() {
   return (
     <div className='divtotal'>
       <div className="card-container lg:ml-10">
-      <Cards
-        number={formData.numero}
-        name={`${formData.nombre} ${formData.apellido}`}
-        expiry={`${formData.mesVencimiento}/${formData.anoVencimiento.slice(-2)}`}
-        cvc={formData.cvc}
-      />
+        <Cards
+          number={formData.numero}
+          name={`${formData.nombre} ${formData.apellido}`}
+          expiry={`${formData.mesVencimiento}/${formData.anoVencimiento.slice(-2)}`}
+          cvc={formData.cvc}
+        />
       </div>
 
       <div className='inputs mr-4'>
@@ -67,6 +58,8 @@ function ReactCards() {
             variant="outlined"
             id="nombre"
             name="nombre"
+            error={!validState.results.nombre}
+            helperText={!validState.results.nombre && "Nombre requerido"}
             value={formData.nombre}
             onChange={handleInputChange}
           />
@@ -76,6 +69,8 @@ function ReactCards() {
             variant="outlined"
             id="apellido"
             name="apellido"
+            error={!validState.results.apellido}
+            helperText={!validState.results.apellido && "Apellido requerido"}
             value={formData.apellido}
             onChange={handleInputChange}
           />
@@ -90,40 +85,40 @@ function ReactCards() {
             onChange={handleInputChange}
           />
           <div className='divalargue'>
-          <TextField
-            label="Mes de vencimiento"
-            variant="outlined"
-            id="mesVencimiento"
-            name="mesVencimiento"
-            select
-            value={formData.mesVencimiento}
-            onChange={handleInputChange}
-            style={{ width: '100px', marginRight: '10px'}}
+            <TextField
+              label="Mes de vencimiento"
+              variant="outlined"
+              id="mesVencimiento"
+              name="mesVencimiento"
+              select
+              value={formData.mesVencimiento}
+              onChange={handleInputChange}
+              style={{ width: '100px', marginRight: '10px' }}
 
-          >
-            {Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')).map((month) => (
-              <MenuItem key={month} value={month}>
-                {month}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            label="Año de vencimiento"
-            variant="outlined"
-            id="anoVencimiento"
-            name="anoVencimiento"
-            select
-            value={formData.anoVencimiento}
-            onChange={handleInputChange}
-            style={{ width: '100px' }}
+            >
+              {Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')).map((month) => (
+                <MenuItem key={month} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              label="Año de vencimiento"
+              variant="outlined"
+              id="anoVencimiento"
+              name="anoVencimiento"
+              select
+              value={formData.anoVencimiento}
+              onChange={handleInputChange}
+              style={{ width: '100px' }}
 
-          >
-            {generateYearOptions().map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField>
+            >
+              {generateYearOptions().map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
         </div>
         <div className='cvc'>
