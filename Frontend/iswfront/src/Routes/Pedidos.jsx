@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import Grid from '@mui/material/Grid';
-import Maps from '../Components/Maps';
 import { FiUpload } from "react-icons/fi";
 import { BsBagCheckFill } from "react-icons/bs";
 import Select from '@mui/material/Select';
@@ -14,10 +13,9 @@ import '../Styles/pedidos.css';
 import { fetchCiudades } from '../api';
 import DetallePedido from '../Components/DetallePedido';
 import { FORMA_PAGO, currentYear } from '../utils/common';
-import { nonEmpty, isValid } from '../utils/validations';
+import { nonEmpty, isValid, greaterOrEqualThan } from '../utils/validations';
 import { Typography } from '@mui/material';
 import { mbToBytes } from '../utils/conversions';
-import { Combobox } from '@headlessui/react';
 
 
 
@@ -30,7 +28,7 @@ const validationsEfectivo = {
   calle_entrega: nonEmpty(),
   nro_entrega: nonEmpty(),
   forma_pago: nonEmpty(),
-  monto_efectivo: nonEmpty(),
+  monto_efectivo: greaterOrEqualThan(5000),
   fecha_entrega: nonEmpty(),
   hora_entrega: nonEmpty(),
 }
@@ -105,7 +103,7 @@ const Pedidos = () => {
     monto_efectivo: '',
     fecha_entrega: loAntesPosible,
     hora_entrega: '-',
-    datos_tarjeta: {}
+    datos_tarjeta: {},
   });
 
   const [cardData, setCardData] = useState({
@@ -151,9 +149,13 @@ const Pedidos = () => {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
-    // Chequea que sea un numero, TODO: igual el monto efectivo habria que calcularlo automaticamente creo
-    if (name === 'monto_efectivo' && !/^\d*$/.test(value)) return;
+    if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
     setForm({ ...form, [name]: value })
+    if (name === 'calle_comercio' || name === 'calle_entrega') {
+      const total = Math.abs(((form.calle_comercio?.length || 0) - (form.calle_entrega?.length || 0)) * 100 + 1000);
+      setTotalAPagar(total);
+      validationsEfectivo['monto_efectivo'] = greaterOrEqualThan(total);
+    }
   }
 
   const handleConfirmation = () => {
@@ -376,12 +378,14 @@ const Pedidos = () => {
                     variant="outlined"
                     fullWidth
                     InputLabelProps={{ shrink: true }}
+                    error={!validState.results?.monto_efectivo}
+                    helperText={!validState.results?.monto_efectivo && "El monto ingresado no es válido"}
                     value={form.monto_efectivo}
-                    onChange={handleChange} />
+                    onChange={handleChange}
+                  />
                 </div>
               ) : form.forma_pago === FORMA_PAGO.TARJETA ? (
                 <div className='datosDeLaTarjeta'>
-                  {form.monto_efectivo = '0'}
                   <ReactCards validState={validStateTarjeta} formData={cardData} setFormData={setCardData} form={form} setForm={setForm}></ReactCards>
                 </div>
               ) : null}
@@ -408,6 +412,7 @@ const Pedidos = () => {
                 type="date"
                 variant="outlined"
                 fullWidth
+                onKeyDown={(e) => e.preventDefault()}
                 inputProps={{ min: TODAY }}
                 InputLabelProps={{ shrink: true }}
                 error={!validState.results?.fecha_entrega}

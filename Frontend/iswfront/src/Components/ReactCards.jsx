@@ -76,8 +76,8 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
             variant="outlined"
             id="nombre"
             name="nombre"
-            error={!validState.results.nombre}
-            helperText={!validState.results.nombre && "Nombre requerido"}
+            error={!validState.results?.nombre}
+            helperText={!validState.results?.nombre && "Nombre requerido"}
             value={formData.nombre}
             onChange={handleInputChange}
           />
@@ -87,8 +87,8 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
             variant="outlined"
             id="apellido"
             name="apellido"
-            error={!validState.results.apellido}
-            helperText={!validState.results.apellido && "Apellido requerido"}
+            error={!validState.results?.apellido}
+            helperText={!validState.results?.apellido && "Apellido requerido"}
             value={formData.apellido}
             onChange={handleInputChange}
           />
@@ -99,8 +99,8 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
             variant="outlined"
             id="numero"
             name="numero"
-            error={!validState.results.numero}
-            helperText={!validState.results.numero && "Numero de tarjeta es requerido"}
+            error={!validState.results?.numero}
+            helperText={!validState.results?.numero && "Numero de tarjeta es requerido"}
             value={formData.numero}
             onChange={handleInputChange}
           />
@@ -145,8 +145,8 @@ function ReactCards({ validState, formData, setFormData, form, setForm }) {
             variant="outlined"
             id="cvc"
             name="cvc"
-            error={!validState.results.cvc}
-            helperText={!validState.results.cvc && "CVC es requerido"}
+            error={!validState.results?.cvc}
+            helperText={!validState.results?.cvc && "CVC es requerido"}
             value={formData.cvc}
             onChange={handleInputChange}
           />
