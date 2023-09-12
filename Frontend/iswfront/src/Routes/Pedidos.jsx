@@ -54,6 +54,7 @@ const validationsDatosTarjeta = {
 }
 
 const Pedidos = () => {
+  const [totalAPagar, setTotalAPagar] = useState(5000);
   const [seleccionarFecha, setSeleccionarFecha] = useState(false);
   const [loAntesPosible, setLoAntesPosible] = useState(false);
   const [ciudades, setCiudades] = useState([]);
@@ -100,7 +101,7 @@ const Pedidos = () => {
     monto_efectivo: '5000',
     fecha_entrega: loAntesPosible,
     hora_entrega: '-',
-    datos_tarjeta: {}
+    datos_tarjeta: {},
   });
 
   const [cardData, setCardData] = useState({
@@ -140,7 +141,11 @@ const Pedidos = () => {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
-    console.log(value);
+    if (name === 'calle_comercio') {
+      const total = (value.length - (form.calle_entrega?.length || 0)) * 100;
+      setTotalAPagar(total);
+      validationsEfectivo['monto_efectivo'] = greaterOrEqualThan(total);
+    }
     if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
     setForm({ ...form, [name]: value })
   }
@@ -340,7 +345,7 @@ const Pedidos = () => {
           <Grid items xs={12} lg={5}>
             <div className='datosDePago'>
               <div className='mx-10 mt-2'>
-                {form.calle_entrega && form.calle_comercio && <label className='font-bold'>Total a pagar: $ 5000</label>}
+                {form.calle_entrega && form.calle_comercio && <label className='font-bold'>Total a pagar: $ {totalAPagar}</label>}
               </div>
               <div className='botonesPagos mb-2'>
                 <label>Forma de pago</label>
@@ -398,6 +403,7 @@ const Pedidos = () => {
                 type="date"
                 variant="outlined"
                 fullWidth
+                onKeyDown={(e) => e.preventDefault()}
                 inputProps={{ min: TODAY }}
                 InputLabelProps={{ shrink: true }}
                 error={!validState.results?.fecha_entrega}
