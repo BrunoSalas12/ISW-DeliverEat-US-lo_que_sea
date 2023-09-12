@@ -20,6 +20,7 @@ import { mbToBytes } from '../utils/conversions';
 
 
 const TODAY = new Date().toISOString().split('T')[0];
+
 const validationsEfectivo = {
   desc_objetos: nonEmpty(),
   ciudad: nonEmpty(),
@@ -28,7 +29,7 @@ const validationsEfectivo = {
   calle_entrega: nonEmpty(),
   nro_entrega: nonEmpty(),
   forma_pago: nonEmpty(),
-  monto_efectivo: greaterOrEqualThan(5000),
+  monto_efectivo: greaterOrEqualThan(50),
   fecha_entrega: nonEmpty(),
   hora_entrega: nonEmpty(),
 }
@@ -92,10 +93,10 @@ const Pedidos = () => {
   const [form, setForm] = useState({
     desc_objetos: '',
     ciudad: {},
-    calle_comercio: '',
+    calle_comercio: ' ',
     nro_comercio: '',
     ref_comercio: '',
-    calle_entrega: '',
+    calle_entrega: ' ',
     nro_entrega: '',
     ref_entrega: '',
     monto_total: 0,
@@ -151,11 +152,11 @@ const Pedidos = () => {
     let { name, value } = event.target;
     if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
     setForm({ ...form, [name]: value })
-    if (name === 'calle_comercio' || name === 'calle_entrega') {
+   /* if (name === 'calle_comercio' || name === 'calle_entrega') {
       const total = Math.abs(((form.calle_comercio?.length || 0) - (form.calle_entrega?.length || 0)) * 100 + 1000);
       setTotalAPagar(total);
       validationsEfectivo['monto_efectivo'] = greaterOrEqualThan(total);
-    }
+    }*/
   }
 
   const handleConfirmation = () => {
@@ -197,7 +198,7 @@ const Pedidos = () => {
 
           <Grid item xs={12} lg={5}>
             <div className='div1 mt-3 p-2 lg:ml-10'>
-              <label className='font-bold pb-2'>Productos:</label>
+              <label className='font-bold pb-2 seccion2'>Productos:</label>
               <TextField
                 id="filled-basic"
                 name="desc_objetos"
@@ -301,7 +302,7 @@ const Pedidos = () => {
         </div>
         <hr className='lineaHorizontalPunteada'/>
         <h3 className='py-3 pl-4 seccion2 font-bold'>Destino de entrega</h3>
-        <div className='detallesDeEntrega font-bold'>
+        <div className='detallesDeEntrega font-bold seccion2'>
           <Grid container>
             <Grid item xs={12} lg={5}>
               <div className='flex flex-col mx-10 mt-2 mb-4 gap-1'>
