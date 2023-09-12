@@ -141,13 +141,13 @@ const Pedidos = () => {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
-    if (name === 'calle_comercio') {
-      const total = (value.length - (form.calle_entrega?.length || 0)) * 100;
+    if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
+    setForm({ ...form, [name]: value })
+    if (name === 'calle_comercio' || name === 'calle_entrega') {
+      const total = Math.abs(((form.calle_comercio?.length || 0) - (form.calle_entrega?.length || 0)) * 100 + 1000);
       setTotalAPagar(total);
       validationsEfectivo['monto_efectivo'] = greaterOrEqualThan(total);
     }
-    if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
-    setForm({ ...form, [name]: value })
   }
 
   const handleConfirmation = () => {
