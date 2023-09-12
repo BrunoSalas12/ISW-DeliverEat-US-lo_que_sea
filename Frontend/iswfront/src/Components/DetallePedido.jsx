@@ -6,7 +6,7 @@ import { Modal, Box, Typography, Grid, Alert, AlertTitle, Stack, CircularProgres
 import { FORMA_PAGO } from "../utils/common"
 import { postPedido } from "../api"
 
-const lineStyle = { margin: '10px 0px 15px 0px', width: '65vw', height: '2px', backgroundColor: 'white' }
+const lineStyle = { margin: '10px 0px 10px 0px', width: '65vw', height: '2px', backgroundColor: 'white' }
 
 const ButtonProgress = ({ done, loading, setLoading, setDone, handleSend }) => {
     if (done) {
@@ -56,10 +56,10 @@ export default function DetallePedido({ confirmationModal, setConfirmationModal,
         >
             <Box sx={{
                 display: 'flex',
-                margin: '3rem',
+                margin: '2rem',
                 backgroundColor: '#007090',
                 color: '#EAEBED',
-                padding: '2rem',
+                padding: '1rem',
                 alignContent: 'center',
                 justifyContent: 'center',
                 borderRadius: '0.5rem',

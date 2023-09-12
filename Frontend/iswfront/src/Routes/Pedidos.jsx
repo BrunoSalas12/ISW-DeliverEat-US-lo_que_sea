@@ -58,7 +58,7 @@ const validationsDatosTarjeta = {
 const Pedidos = () => {
   const [montoTotal, setMontoTotal] = useState(0);
   const [seleccionarFecha, setSeleccionarFecha] = useState(false);
-  const [loAntesPosible, setLoAntesPosible] = useState(true);
+  const [loAntesPosible, setLoAntesPosible] = useState(false);
   const [ciudades, setCiudades] = useState([]);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [validState, setValidState] = useState({
@@ -102,7 +102,7 @@ const Pedidos = () => {
     monto_total: 0,
     forma_pago: '',
     monto_efectivo: '',
-    fecha_entrega: loAntesPosible,
+    fecha_entrega: 1,
     hora_entrega: '-',
     datos_tarjeta: {},
   });
@@ -141,30 +141,28 @@ const Pedidos = () => {
     setLoAntesPosible(!loAntesPosible);
     setSeleccionarFecha(false);
   };
-  
+
   const handleCalculoMontoTotal = (event) => {
     handleChange(event);
-    let monto = 50 + (50 * Math.abs(form.calle_comercio.length - form.calle_entrega.length));
-    setMontoTotal(monto);
+    let total = Math.abs(((form.calle_comercio?.length || 0) * 5 - (form.calle_entrega?.length || 0) * 3) * 100 + 1000);
+    total = total > 500 ? total : 500;
+    setMontoTotal(total);
+    validationsEfectivo['monto_efectivo'] = greaterOrEqualThan(total);
   }
 
   const handleChange = (event) => {
     let { name, value } = event.target;
     if (name === 'monto_efectivo' && !/^\d*$/.test(value) || value === "0") return;
     setForm({ ...form, [name]: value })
-   /* if (name === 'calle_comercio' || name === 'calle_entrega') {
-      const total = Math.abs(((form.calle_comercio?.length || 0) - (form.calle_entrega?.length || 0)) * 100 + 1000);
-      setTotalAPagar(total);
-      validationsEfectivo['monto_efectivo'] = greaterOrEqualThan(total);
-    }*/
   }
 
   const handleConfirmation = () => {
-    setForm({...form, monto_total: montoTotal})
+    setForm({ ...form, ['monto_total']: montoTotal });
     const validationResults = form.forma_pago === FORMA_PAGO.EFECTIVO ? isValid(form, validationsEfectivo) : isValid(form, validationsTarjeta);
     const validationResultsTarjeta = form.forma_pago === FORMA_PAGO.TARJETA ? isValid(cardData, validationsDatosTarjeta) : { isValid: true };
     setValidState((prev) => prev = { ...validationResults });
     setValidStateTarjeta((prev) => prev = { ...validationResultsTarjeta });
+    console.log(form, validationResults);
     if (validationResultsTarjeta.isValid && validationResults.isValid) {
       setConfirmationModal(!confirmationModal);
     }
@@ -174,18 +172,14 @@ const Pedidos = () => {
     fetchCiudades()
       .then(jsonCiudades => {
         setCiudades(jsonCiudades['ciudades']);
-        setForm({ ciudad: { ...ciudades[0] } })
+        setForm({ ciudad: "" })
       })
       .catch(e => console.log(e));
   }, []);
 
   useEffect(() => {
-    loAntesPosible
-      ? setForm({ ...form, ['fecha_entrega']: 1, ['hora_entrega']: '-' })
-      : setForm({ ...form, ['fecha_entrega']: '', ['hora_entrega']: '' });
-  }, [loAntesPosible])
-
-
+    setForm({ ...form, fecha_entrega: 1, hora_entrega: '-' })
+  }, [loAntesPosible]);
 
   return (
     <div>
@@ -237,13 +231,13 @@ const Pedidos = () => {
           </Grid>
 
         </Grid>
-        <hr className='lineaHorizontalBase'/>
+        <hr className='lineaHorizontalBase' />
         <h3 className='py-3 pl-4 seccion2 font-bold'>Datos de envío</h3>
         <div className='datosDeEnvio seccion2'>
           <div className='selectCiudad ml-10 my-5'>
             <label className='font-bold'>Ciudad:</label>
             {
-              ciudades.length > 0 && <Select sx={{ minWidth: '175px', maxWidth: '175px' }} className='ml-3' name="ciudad" labelId="demo-simple-select-label" id="demo-simple-select" value={form.ciudad} onChange={handleChange}>
+              ciudades.length > 0 && <Select sx={{ minWidth: '175px', maxWidth: '175px' }} className='ml-3' name="ciudad" labelId="demo-simple-select-label" id="demo-simple-select" error={!validState.results?.ciudad} value={form.ciudad} onChange={handleChange}>
                 {ciudades.map((c, idx) => (
                   <MenuItem key={idx} value={c}>{c['nombre']}</MenuItem>
                 )
@@ -252,7 +246,7 @@ const Pedidos = () => {
             }
           </div>
         </div>
-        <hr className='lineaHorizontalPunteada'/>
+        <hr className='lineaHorizontalPunteada' />
         <h3 className='py-3 pl-4 seccion2 font-bold'>Comercio</h3>
         <div className='detallesDeComercio seccion2'>
           <Grid container>
@@ -296,11 +290,11 @@ const Pedidos = () => {
             </Grid>
 
             <Grid item xs={12} lg={7} className='googleMaps py-4 mt-2 text-center'>
-              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
+              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600} />
             </Grid>
           </Grid>
         </div>
-        <hr className='lineaHorizontalPunteada'/>
+        <hr className='lineaHorizontalPunteada' />
         <h3 className='py-3 pl-4 seccion2 font-bold'>Destino de entrega</h3>
         <div className='detallesDeEntrega font-bold seccion2'>
           <Grid container>
@@ -344,11 +338,11 @@ const Pedidos = () => {
             </Grid>
 
             <Grid item xs={12} lg={7} className='googleMaps py-4 mt-4 text-center'>
-            <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
+              <img src={require('../img/MapaCordoba.PNG')} width={600} height={600} />
             </Grid>
           </Grid>
         </div>
-        <hr className='lineaHorizontalBase'/>
+        <hr className='lineaHorizontalBase' />
         <h3 className='py-3 pl-4 seccion2 font-bold'>Datos de pago</h3>
         <Grid container>
           <Grid items xs={12} lg={5}>
@@ -393,7 +387,7 @@ const Pedidos = () => {
             </div>
           </Grid>
         </Grid>
-        <hr className='lineaHorizontalBase'/>
+        <hr className='lineaHorizontalBase' />
         <h3 className='py-3 pl-4 seccion2 font-bold'>Fecha de recepción</h3>
         <div className="fechaRecepcion my-2">
           <div className='labelfechas'>
@@ -402,6 +396,7 @@ const Pedidos = () => {
             <label>Lo antes posible</label>
             <Checkbox {...label} checked={seleccionarFecha} onChange={handleSeleccionarFechaChange} />
             <label>Seleccionar fecha y hora</label>
+            {!validState.isValid && !loAntesPosible && !seleccionarFecha && <Typography mt="15px" color='#f44336'>Elija fecha de recepción</Typography>}
           </div>
 
           {seleccionarFecha && (
@@ -435,7 +430,7 @@ const Pedidos = () => {
             </div>
           )}
         </div>
-        <hr className='lineaHorizontalBase'/>
+        <hr className='lineaHorizontalBase' />
         <div className='botonConfirmar py-3 mb-4 flex justify-end lg:mr-10'>
           <button onClick={handleConfirmation} className="flex flex-row gap-2 align-center rounded-full botonComun  py-2 px-4">Confirmar pedido<BsBagCheckFill /></button>
         </div>
