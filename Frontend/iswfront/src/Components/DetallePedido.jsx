@@ -85,7 +85,7 @@ export default function DetallePedido({ confirmationModal, setConfirmationModal,
                         {form.ref_entrega} <br />
                         <Grid style={lineStyle}></Grid>
                         <b>Monto Total </b><br />
-                        {form.monto_total} <br />
+                        ${form.monto_total} <br />
                         <Grid style={lineStyle}></Grid>
                         <b>Forma de Pago </b><br />
                         {form.forma_pago} <br />

@@ -188,7 +188,7 @@ const Pedidos = () => {
     <div>
       <Navbar />
 
-      <h3 className='py-3 pl-4 textos'>Nuevo pedido</h3>
+      <h3 className='py-3 pl-4 seccion1 font-bold'>Nuevo pedido</h3>
       <div className='detallePedido'>
 
         <Grid container direction={{ xs: "column-reverse", lg: "row" }}>
@@ -215,12 +215,11 @@ const Pedidos = () => {
 
         <Grid container direction={{ xs: "column-reverse", lg: "row" }}>
 
-          <Grid item xs={12} lg={5} className='grilla1'>
+          <Grid item xs={12} lg={5} className='grilla2'>
             <div className='div1 lg:ml-10'>
               <button
                 className="mt-2 mb-2 rounded-full botonfotos py-2 px-4 flex justify-center flex-col items-center"
-                onClick={onClickSubirFoto}
-              >
+                onClick={onClickSubirFoto}>
                 Subir foto<FiUpload />
               </button>
               <input
@@ -235,9 +234,9 @@ const Pedidos = () => {
           </Grid>
 
         </Grid>
-
-        <h3 className='py-3 pl-4 textos'>Datos de envío</h3>
-        <div className='datosDeEnvio'>
+        <hr className='lineaHorizontalBase'/>
+        <h3 className='py-3 pl-4 seccion2 font-bold'>Datos de envío</h3>
+        <div className='datosDeEnvio seccion2'>
           <div className='selectCiudad ml-10 my-5'>
             <label className='font-bold'>Ciudad:</label>
             {
@@ -250,9 +249,9 @@ const Pedidos = () => {
             }
           </div>
         </div>
-
-        <h3 className='py-3 pl-4 textos'>Comercio</h3>
-        <div className='detallesDeComercio'>
+        <hr className='lineaHorizontalPunteada'/>
+        <h3 className='py-3 pl-4 seccion2 font-bold'>Comercio</h3>
+        <div className='detallesDeComercio seccion2'>
           <Grid container>
             <Grid item xs={12} lg={5}>
               <div className='flex flex-col mx-10 mt-2 mb-4 gap-1'>
@@ -293,14 +292,14 @@ const Pedidos = () => {
               </div>
             </Grid>
 
-            <Grid item xs={12} lg={7} className='googleMaps mt-2 text-center'>
+            <Grid item xs={12} lg={7} className='googleMaps py-4 mt-2 text-center'>
               <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
             </Grid>
           </Grid>
         </div>
-
-        <h3 className='py-3 pl-4 textos'>Destino de entrega</h3>
-        <div className='detallesDeEntrega'>
+        <hr className='lineaHorizontalPunteada'/>
+        <h3 className='py-3 pl-4 seccion2 font-bold'>Destino de entrega</h3>
+        <div className='detallesDeEntrega font-bold'>
           <Grid container>
             <Grid item xs={12} lg={5}>
               <div className='flex flex-col mx-10 mt-2 mb-4 gap-1'>
@@ -341,19 +340,19 @@ const Pedidos = () => {
               </div>
             </Grid>
 
-            <Grid item xs={12} lg={7} className='googleMaps mt-4 text-center'>
+            <Grid item xs={12} lg={7} className='googleMaps py-4 mt-4 text-center'>
             <img src={require('../img/MapaCordoba.PNG')} width={600} height={600}/>
             </Grid>
           </Grid>
         </div>
-
-        <h3 className='py-3 pl-4 textos'>Datos de pago</h3>
+        <hr className='lineaHorizontalBase'/>
+        <h3 className='py-3 pl-4 seccion2 font-bold'>Datos de pago</h3>
         <Grid container>
           <Grid items xs={12} lg={5}>
             <div className='datosDePago'>
               <div className='mx-10 mt-2'>
-                <label className='font-bold'>Total a pagar: $</label>
-                <label className='font-bold'>{montoTotal}</label>
+                <label className='textos font-bold'>Total a pagar: $</label>
+                <label className='textos font-bold'>{montoTotal}</label>
               </div>
               <div className='botonesPagos mb-2'>
                 <label>Forma de pago</label>
@@ -389,8 +388,8 @@ const Pedidos = () => {
             </div>
           </Grid>
         </Grid>
-
-        <h3 className='py-3 pl-4 textos'>Fecha de recepción</h3>
+        <hr className='lineaHorizontalBase'/>
+        <h3 className='py-3 pl-4 seccion2 font-bold'>Fecha de recepción</h3>
         <div className="fechaRecepcion my-2">
           <div className='labelfechas'>
 
@@ -430,9 +429,9 @@ const Pedidos = () => {
             </div>
           )}
         </div>
-
-        <div className='botonConfirmar mb-4 flex justify-end lg:mr-10'>
-          <button onClick={handleConfirmation} className="flex flex-row gap-2 align-center rounded-full botonComun py-2 px-4">Confirmar pedido<BsBagCheckFill /></button>
+        <hr className='lineaHorizontalBase'/>
+        <div className='botonConfirmar py-3 mb-4 flex justify-end lg:mr-10'>
+          <button onClick={handleConfirmation} className="flex flex-row gap-2 align-center rounded-full botonComun  py-2 px-4">Confirmar pedido<BsBagCheckFill /></button>
         </div>
       </div>
 

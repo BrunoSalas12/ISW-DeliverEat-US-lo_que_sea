@@ -3,10 +3,28 @@
     color: #006989;
 }
 
+.seccion1{
+    background-color: #01A7C2;
+    color: #EAEBED;
+    text-align: center;
+    
+    
+}
+.seccion2{
+    
+    color: #006989;
+    background-color: #EAEBED;
+}
+.datos{
+    background-color: #a3bac3;
+    color: black;
+}
+
 .grilla1{
     display: flex;
     justify-content: center;
-    color: black;
+    color: #006989;
+    background-color: #EAEBED;
 }
 
 .div1{
@@ -21,6 +39,7 @@
     justify-content: center;
     align-items: center;
     color: black;
+    background-color: #EAEBED;
 }
 
 .botonComun {
@@ -35,6 +54,7 @@
     justify-self: center;
     width: 90vw;
 }
+
 
 .botonfotos:hover, .botonComun:hover {
     background-color: #006989;
@@ -90,6 +110,17 @@
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 10px;
+}
+.lineaHorizontalBase{
+    background-color: #006989;
+    height: 2px;
+    
+}
+.lineaHorizontalPunteada{
+    background-color: #006989;
+    height: 2px;
+    border-width: 1px;
+    border-style: dashed;
 }
 
 .imageCard {

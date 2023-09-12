@@ -9,10 +9,10 @@ import { TbTruckReturn } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 
 const solutions = [
-  { name: 'Pedido de lo que sea', description: 'Get a better understanding of your traffic', icon: AiFillShopping , ruta:'/pedidos' },
-  { name: 'Pedido en comercio adherido', description: 'Speak directly to your customers', icon: AiFillShop },
-  { name: 'Mis pedidos', description: "Your customers' data will be safe and secure", icon: AiOutlineShoppingCart },
-  { name: 'Historia de Pedidos', description: 'Connect with third-party tools', icon: SiGoogleforms },
+  { name: 'Pedido de lo que sea', description: 'Puedes realizar un pedido a comercios que no esten adheridos', icon: AiFillShopping , ruta:'/pedidos' },
+  { name: 'Pedido en comercio adherido', description: 'Realizar el pedido de tus objetos en el carrito', icon: AiFillShop },
+  { name: 'Mis pedidos', description: "", icon: AiOutlineShoppingCart },
+  { name: 'Historia de Pedidos', description: '', icon: SiGoogleforms },
 ]
 const callsToAction = [
   { name: 'Devoluciones', icon: TbTruckReturn },
