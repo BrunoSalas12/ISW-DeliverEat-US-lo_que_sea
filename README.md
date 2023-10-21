@@ -4,8 +4,9 @@
 ## Como correr la aplicación
 
 El Backend y el Frontend tienen que estar corriendo al mismo tiempo, primero entrar en 
-la carpeta `Backend` abrir una terminal y escribir `npm start`; luego entrar en la 
-carpeta `Frontend/iswfront` y correr en otra terminal `npm start`. Con eso ya tendria
+la carpeta `Backend` abrir una terminal y escribir `npm i` para que se instalen las librerias,
+luego escribir `npm start`; luego entrar en la carpeta `Frontend/iswfront` y correr en otra 
+terminal `npm i --force`para instalar las librerias y levantar con `npm start`. Con eso ya tendria
 que estar corriendo la aplicación en `localhost:3000`. Tengan en cuenta que esta pensada
 para Mobile por lo que en pantalla completa se ve mal utilicen el `F12` en el navegador
 para poner la página en modo responsive.
